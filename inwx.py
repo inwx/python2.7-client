@@ -101,4 +101,3 @@ class prettyprint (object):
             count += 1
             output += "%s = %s" % (check['domain'], check['status'])
         return output
-        
