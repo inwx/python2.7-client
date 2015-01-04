@@ -37,7 +37,8 @@ class domrobot ():
                 self.cookie = cookies
                 if(self.debug == True):
                     print("Cookie:" + self.cookie)
-        return apiReturn["resData"]
+        if("resData" in apiReturn):
+            return apiReturn["resData"]
 
 class prettyprint (object):
     """
