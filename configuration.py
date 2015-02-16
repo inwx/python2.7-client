@@ -24,7 +24,12 @@
 ###### It is not needed if you just want to use the inwx class. ######
 
 import sys
-import ConfigParser
+
+if sys.version_info.major == 3:
+    import configparser
+else:
+    import ConfigParser as configparser
+
 from os.path import expanduser
 
 def get_account_data(print_errors = False, config_file = 'conf.cfg', config_section = 'ote'):
@@ -38,23 +43,24 @@ def get_account_data(print_errors = False, config_file = 'conf.cfg', config_sect
         api_url = config.get(config_section, 'url')
         username = config.get(config_section, 'username')
         password = config.get(config_section, 'password')
-    except Exception, err:
-        message = 'Error: Please make sure your config file %s contains the section %s with the entries "url", "username" and "password".' % (config_file, config_section)
+        shared_secret = config.get(config_section, 'shared_secret')
+    except Exception as err:
+        message = 'Error: Please make sure your config file %s contains the section %s with the entries "url", "username", "password" and "shared_secret".' % (config_file, config_section)
         if print_errors:
-            print message
+            print(message)
             sys.exit(2)
         else:
             raise NameError(message)
-    return (api_url, username, password)
+    return (api_url, username, password, shared_secret)
 
 def open_config_file(print_errors, config_file):
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     try:
         if config.read(config_file) == []: raise Exception()
     except:
         message = "Error: Please make sure you adopted the config file: %s" % config_file
         if print_errors:
-            print message
+            print(message)
             sys.exit(2)
         else:
             raise NameError(message)
