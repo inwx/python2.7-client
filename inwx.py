@@ -1,11 +1,35 @@
-import xmlrpclib
-from xmlrpclib import _Method
-import urllib2
+import sys
+
+if sys.version_info.major == 3:
+    import xmlrpc.client
+    from xmlrpc.client import _Method
+    import urllib.request, urllib.error, urllib.parse
+else:
+    import xmlrpclib
+    from xmlrpclib import _Method
+    import urllib2
+
+import base64
+import struct
+import time
+import hmac
+import hashlib
+
+def getOTP(shared_secret):
+    key = base64.b32decode(shared_secret, True)
+    msg = struct.pack(">Q", int(time.time())//30)
+    h = hmac.new(key, msg, hashlib.sha1).digest()
+    if sys.version_info.major == 3:
+        o = h[19] & 15
+    else:
+        o = ord(h[19]) & 15
+    h = (struct.unpack(">I", h[o:o+4])[0] & 0x7fffffff) % 1000000
+    return h
 
 class domrobot ():
     def __init__ (self, address, debug = False):
         self.url = address
-        self.debug = debug 
+        self.debug = debug
         self.cookie = None
         self.version = "1.0"
 
@@ -14,29 +38,49 @@ class domrobot ():
 
     def __request (self, methodname, params):
         tuple_params = tuple([params[0]])
-        requestContent = xmlrpclib.dumps(tuple_params, methodname)
+        if sys.version_info.major == 3:
+            requestContent = xmlrpc.client.dumps(tuple_params, methodname)
+        else:
+            requestContent = xmlrpclib.dumps(tuple_params, methodname)
         if(self.debug == True):
-            print("Anfrage: "+str(requestContent).replace("\n", ""))
+            print(("Anfrage: "+str(requestContent).replace("\n", "")))
         headers = { 'User-Agent' : 'DomRobot/'+self.version+' Python-v2.7', 'Content-Type': 'text/xml','content-length': str(len(requestContent))}
         if(self.cookie!=None):
             headers['Cookie'] = self.cookie
-        req = urllib2.Request(self.url, requestContent, headers)
-        response = urllib2.urlopen(req)
+
+        if sys.version_info.major == 3:
+            req = urllib.request.Request(self.url, bytearray(requestContent, 'ascii'), headers)
+            response = urllib.request.urlopen(req)
+        else:
+            req = urllib2.Request(self.url, bytearray(requestContent, 'ascii'), headers)
+            response = urllib2.urlopen(req)
+
         responseContent = response.read()
-        cookies = response.info().getheader('Set-Cookie')
+
+        if sys.version_info.major == 3:
+            cookies = response.getheader('Set-Cookie')
+        else:
+            cookies = response.info().getheader('Set-Cookie')
+
         if(self.debug == True):
-            print ("Antwort: "+str(responseContent).replace("\n", ""))
-        apiReturn = xmlrpclib.loads(responseContent)
+            print(("Antwort: "+str(responseContent).replace("\n", "")))
+        if sys.version_info.major == 3:
+            apiReturn = xmlrpc.client.loads(responseContent)
+        else:
+            apiReturn = xmlrpclib.loads(responseContent)
         apiReturn = apiReturn[0][0]
         if(apiReturn["code"]!=1000):
             raise NameError('There was a problem: %s (Error code %s)' % (apiReturn['msg'], apiReturn['code']), apiReturn)
             return False
 
         if(cookies!=None):
-                cookies = response.info().getheader('Set-Cookie')
+                if sys.version_info.major == 3:
+                    cookies = response.getheader('Set-Cookie')
+                else:
+                    cookies = response.info().getheader('Set-Cookie')
                 self.cookie = cookies
                 if(self.debug == True):
-                    print("Cookie:" + self.cookie)
+                    print(("Cookie:" + self.cookie))
         if("resData" in apiReturn):
             return apiReturn["resData"]
 
@@ -89,7 +133,7 @@ class prettyprint (object):
             output += "%i of %i - %s status: '%s' price: %.2f invoice: %s date: %s remote address: %s\n" % (count, total, log['domain'], log['status'], log['price'], log['invoice'], log['date'], log['remoteAddr'])
             output += "           user text: '%s'\n" % log['userText'].replace("\n",'\n           ')
         return output
-    
+
     @staticmethod
     def domain_check(checks):
         """
@@ -101,4 +145,4 @@ class prettyprint (object):
             count += 1
             output += "%s = %s" % (check['domain'], check['status'])
         return output
-        
+
