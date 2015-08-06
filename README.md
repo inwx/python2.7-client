@@ -1,5 +1,7 @@
 inwx.com XML-RPC Python 2.7 Client
 =========
+**Please notice, that the Return of the Function contains now the complete API-Return not only the resData**
+
 You can access all functions of our frontend via an application programming interface (API). Our API is based on the XML-RPC protocol and thus can be easily addressed by almost all programming languages. The documentation and programming examples in PHP, Java, Ruby and Python can be downloaded here.
 
 There is also an OT&E test system, which you can access via ote.inwx.com. Here you will find the known web interface which is using a test database. On the OTE system no actions will be charged. So you can test how to register domains etc.
