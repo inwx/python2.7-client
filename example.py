@@ -17,9 +17,9 @@ def main():
     if 'tfa' in loginRet and loginRet['tfa'] == 'GOOGLE-AUTH':
         loginRet = inwx_conn.account.unlock({'tan': getOTP(shared_secret)})
 
-    domain = "*"
-    checkRet = inwx_conn.domain.list({})
-    print(prettyprint.domains(checkRet))
+    domain = "mydomain.com"
+    checkRet = inwx_conn.domain.check({'domain': domain})
+    print(prettyprint.domain_check(checkRet))
 
 if __name__ == '__main__':
     main()
