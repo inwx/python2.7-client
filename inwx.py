@@ -81,8 +81,7 @@ class domrobot ():
                 self.cookie = cookies
                 if(self.debug == True):
                     print(("Cookie:" + self.cookie))
-        if("resData" in apiReturn):
-            return apiReturn["resData"]
+        return apiReturn
 
 class prettyprint (object):
     """
@@ -94,8 +93,11 @@ class prettyprint (object):
         """
         iterable contacts:  The list of contacts to be printed.
         """
-        output = "\nCurrently you have %i contacts set up for your account at InterNetworX:\n\n" % len(contacts)
-        for contact in contacts:
+	if("resData" in contacts):
+            contacts = contacts['resData']
+
+        output = "\nCurrently you have %i contacts set up for your account at InterNetworX:\n\n" % len(contacts['contact'])
+        for contact in contacts['contact']:
             output += "ID: %s\nType: %s\n%s\n%s\n%s %s\n%s\n%s\nTel: %s\n------\n" % (contact['id'], contact['type'], contact['name'], contact['street'], contact['pc'], contact['city'], contact['cc'], contact['email'], contact['voice'])
         return output
 
@@ -104,9 +106,12 @@ class prettyprint (object):
         """
         list domains:  The list of domains to be pretty printed.
         """
-        output = "\n%i domains:\n" % len(domains)
-        for domain in domains:
-            output += "Domain: %s (Type: %s)\n" % (domain['domain'], domain['type'])
+	if("resData" in domains):
+	    domains = domains['resData']
+
+        output = "\n%i domains:\n" % len(domains['domain'])
+        for domain in domains['domain']:
+            output += "Domain: %s (Status: %s)\n" % (domain['domain'], domain['status'])
         return output
 
     @staticmethod
@@ -114,9 +119,12 @@ class prettyprint (object):
         """
         list namerserversets:  The list of nameserversets to be pretty printed.
         """
-        count, total = 0, len(nameserversets)
+	if("resData" in nameserversets):
+	    nameserversets = nameserversets['resData']
+
+        count, total = 0, len(nameserversets['nsset'])
         output = "\n%i nameserversets:\n" % total
-        for nameserverset in nameserversets:
+        for nameserverset in nameserversets['nsset']:
             count += 1
             output += "%i of %i - ID: %i consisting of [%s]\n" % (count, total, nameserverset['id'], ", ".join(nameserverset['ns']))
         return output
@@ -126,9 +134,12 @@ class prettyprint (object):
         """
         list logs:  The list of nameserversets to be pretty printed.
         """
-        count, total = 0, len(logs)
+        if("resData" in logs):
+            logs = logs['resData']
+
+        count, total = 0, len(logs['domain'])
         output = "\n%i log entries:\n" % total
-        for log in logs:
+        for log in logs['domain']:
             count += 1
             output += "%i of %i - %s status: '%s' price: %.2f invoice: %s date: %s remote address: %s\n" % (count, total, log['domain'], log['status'], log['price'], log['invoice'], log['date'], log['remoteAddr'])
             output += "           user text: '%s'\n" % log['userText'].replace("\n",'\n           ')
@@ -139,10 +150,12 @@ class prettyprint (object):
         """
         list checks:  The list of domain checks to be pretty printed.
         """
+	if("resData" in checks):
+		checks = checks['resData']
+
         count, total = 0, len(checks)
         output = "\n%i domain check(s):\n" % total
         for check in checks['domain']:
             count += 1
             output += "%s = %s" % (check['domain'], check['status'])
         return output
-
