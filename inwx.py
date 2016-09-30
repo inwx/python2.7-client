@@ -93,7 +93,7 @@ class prettyprint (object):
         """
         iterable contacts:  The list of contacts to be printed.
         """
-	if("resData" in contacts):
+        if("resData" in contacts):
             contacts = contacts['resData']
 
         output = "\nCurrently you have %i contacts set up for your account at InterNetworX:\n\n" % len(contacts['contact'])
@@ -106,8 +106,8 @@ class prettyprint (object):
         """
         list domains:  The list of domains to be pretty printed.
         """
-	if("resData" in domains):
-	    domains = domains['resData']
+        if("resData" in domains):
+            domains = domains['resData']
 
         output = "\n%i domains:\n" % len(domains['domain'])
         for domain in domains['domain']:
@@ -119,8 +119,8 @@ class prettyprint (object):
         """
         list namerserversets:  The list of nameserversets to be pretty printed.
         """
-	if("resData" in nameserversets):
-	    nameserversets = nameserversets['resData']
+        if("resData" in nameserversets):
+            nameserversets = nameserversets['resData']
 
         count, total = 0, len(nameserversets['nsset'])
         output = "\n%i nameserversets:\n" % total
@@ -150,8 +150,8 @@ class prettyprint (object):
         """
         list checks:  The list of domain checks to be pretty printed.
         """
-	if("resData" in checks):
-		checks = checks['resData']
+        if("resData" in checks):
+                checks = checks['resData']
 
         count, total = 0, len(checks)
         output = "\n%i domain check(s):\n" % total
