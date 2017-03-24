@@ -22,6 +22,9 @@ def main():
     inwx_conn = domrobot(api_url, False)
     loginRet = inwx_conn.account.login({'lang': 'en', 'user': username, 'pass': password})
 
+    if 'resData' in loginRet:
+        loginRet = loginRet['resData']
+
     if 'tfa' in loginRet and loginRet['tfa'] == 'GOOGLE-AUTH':
         loginRet = inwx_conn.account.unlock({'tan': getOTP(shared_secret)})
 
