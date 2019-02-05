@@ -28,7 +28,7 @@ import sys
 if sys.version_info.major == 3:
     import configparser
 else:
-    import configparser as configparser
+    import ConfigParser as configparser
 
 from os.path import expanduser
 

@@ -5,9 +5,9 @@ if sys.version_info.major == 3:
     from xmlrpc.client import _Method
     import urllib.request, urllib.error, urllib.parse
 else:
-    import xmlrpc.client
-    from xmlrpc.client import _Method
-    import urllib.request, urllib.error, urllib.parse
+    import xmlrpclib
+    from xmlrpclib import _Method
+    import urllib2
 
 import base64
 import struct
@@ -41,7 +41,7 @@ class domrobot ():
         if sys.version_info.major == 3:
             requestContent = xmlrpc.client.dumps(tuple_params, methodname)
         else:
-            requestContent = xmlrpc.client.dumps(tuple_params, methodname)
+            requestContent = xmlrpclib.dumps(tuple_params, methodname)
         if(self.debug == True):
             print(("Anfrage: "+str(requestContent).replace("\n", "")))
         headers = { 'User-Agent' : 'DomRobot/'+self.version+' Python-v2.7', 'Content-Type': 'text/xml','content-length': str(len(requestContent))}
@@ -52,8 +52,8 @@ class domrobot ():
             req = urllib.request.Request(self.url, bytearray(requestContent, 'ascii'), headers)
             response = urllib.request.urlopen(req)
         else:
-            req = urllib.request.Request(self.url, bytearray(requestContent, 'ascii'), headers)
-            response = urllib.request.urlopen(req)
+            req = urllib2.Request(self.url, bytearray(requestContent, 'ascii'), headers)
+            response = urllib2.urlopen(req)
 
         responseContent = response.read()
 
@@ -67,7 +67,7 @@ class domrobot ():
         if sys.version_info.major == 3:
             apiReturn = xmlrpc.client.loads(responseContent)
         else:
-            apiReturn = xmlrpc.client.loads(responseContent)
+            apiReturn = xmlrpclib.loads(responseContent)
         apiReturn = apiReturn[0][0]
         if(apiReturn["code"]!=1000):
             raise NameError('There was a problem: %s (Error code %s)' % (apiReturn['msg'], apiReturn['code']), apiReturn)

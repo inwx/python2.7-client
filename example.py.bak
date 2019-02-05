@@ -22,7 +22,7 @@ def main():
 
     domain = "mydomain.com"
     checkRet = inwx_conn.domain.check({'domain': domain})
-    print((prettyprint.domain_check(checkRet)))
+    print(prettyprint.domain_check(checkRet))
 
 if __name__ == '__main__':
     main()
