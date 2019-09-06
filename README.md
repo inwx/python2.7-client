@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://www.inwx.com/en/" target="_blank">
+    <img src="https://images.inwx.com/logos/inwx.png">
+  </a>
+</p>
+
 inwx.com XML-RPC Python 2.7 Client
 =========
 **Please notice, that the Return of the Function contains now the complete API-Return not only the resData**
