@@ -4,17 +4,19 @@
   </a>
 </p>
 
-inwx.com XML-RPC Python 2.7 Client
+INWX Domrobot Python 2.7 Client
 =========
 **If you're looking for our Python 3 Client you can find it [here.](https://github.com/inwx/python-client)**
 
-You can access all functions of our frontend via an application programming interface (API). Our API is based on the XML-RPC protocol and thus can be easily addressed by almost all programming languages. The documentation and programming examples in PHP, Java, Ruby and Python can be downloaded here.
+You can access all functions of our frontend via our API, which is available via the XML-RPC or JSON-RPC protocol and thus can be easily consumed with all programming languages.
 
-There is also an OT&E test system, which you can access via ote.inwx.com. Here you will find the known web interface which is using a test database. On the OTE system no actions will be charged. So you can test how to register domains etc.
+There is also an OT&E test system, which you can access via [ote.inwx.com](https://ote.inwx.com/en/). Here you will find the known web interface which is using a test database. On the OT&E system no actions will be charged. So you can test as much as you like there.
 
 Documentation
 ------
-You can view a detailed description of the API functions in our documentation. The documentation as PDF ist part of the Projekt. You also can read the documentation online http://www.inwx.de/en/help/apidoc
+You can view a detailed description of the API functions in our documentation. You can find the online documentation [by clicking here](https://www.inwx.de/en/help/apidoc).
+
+If you still experience any kind of problems don't hesitate to contact our [support via email](mailto:support@inwx.de).
 
 Example
 -------
