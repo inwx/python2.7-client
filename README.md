@@ -6,7 +6,7 @@
 
 inwx.com XML-RPC Python 2.7 Client
 =========
-**Please notice, that the Return of the Function contains now the complete API-Return not only the resData**
+**If you're looking for our Python 3 Client you can find it [here.](https://github.com/inwx/python-client)**
 
 You can access all functions of our frontend via an application programming interface (API). Our API is based on the XML-RPC protocol and thus can be easily addressed by almost all programming languages. The documentation and programming examples in PHP, Java, Ruby and Python can be downloaded here.
 
