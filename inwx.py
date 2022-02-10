@@ -96,7 +96,7 @@ class prettyprint (object):
         if("resData" in contacts):
             contacts = contacts['resData']
 
-        output = "\nCurrently you have %i contacts set up for your account at InterNetworX:\n\n" % len(contacts['contact'])
+        output = "\nCurrently you have %i contacts set up for your account at INWX:\n\n" % len(contacts['contact'])
         for contact in contacts['contact']:
             output += "ID: %s\nType: %s\n%s\n%s\n%s %s\n%s\n%s\nTel: %s\n------\n" % (contact['id'], contact['type'], contact['name'], contact['street'], contact['pc'], contact['city'], contact['cc'], contact['email'], contact['voice'])
         return output
