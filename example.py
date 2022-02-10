@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: UTF8 -*-
 
-# author: InterNetworX, info →AT→ inwx.de
+# author: INWX, info →AT→ inwx.de
 
 #############################################################################
 ###### This is an example of how to use the inwx class #######
